@@ -648,54 +648,11 @@ def instrument_ollama(
         **governance_defaults
     )
 
-def auto_instrument():
-    """
-    Enable automatic instrumentation of Ollama operations.
-    
-    This patches Ollama client operations to automatically add GenOps tracking.
-    
-    Usage:
-        from genops.providers.ollama import auto_instrument
-        auto_instrument()
-        
-        # Your existing Ollama code now has automatic tracking
-        import ollama
-        response = ollama.generate(model="llama2", prompt="Hello")
-    """
-    global_adapter = GenOpsOllamaAdapter()
-    
-    if HAS_OLLAMA_CLIENT:
-        # Patch ollama client methods
-        original_generate = ollama.generate
-        original_chat = ollama.chat
-        
-        def patched_generate(*args, **kwargs):
-            # Extract model and prompt from args/kwargs
-            model = args[0] if args else kwargs.get('model', 'unknown')
-            prompt = args[1] if len(args) > 1 else kwargs.get('prompt', '')
-            
-            # Use our instrumented method
-            return global_adapter.generate(model=model, prompt=prompt, **kwargs)
-        
-        def patched_chat(*args, **kwargs):
-            model = args[0] if args else kwargs.get('model', 'unknown')
-            messages = args[1] if len(args) > 1 else kwargs.get('messages', [])
-            
-            return global_adapter.chat(model=model, messages=messages, **kwargs)
-        
-        # Apply patches
-        ollama.generate = patched_generate
-        ollama.chat = patched_chat
-        
-        logger.info("GenOps auto-instrumentation enabled for Ollama")
-    else:
-        logger.warning("Ollama client not available for auto-instrumentation")
 
 # Export main classes and functions
 __all__ = [
     "GenOpsOllamaAdapter",
     "OllamaOperation", 
     "LocalModelMetrics",
-    "instrument_ollama",
-    "auto_instrument"
+    "instrument_ollama"
 ]

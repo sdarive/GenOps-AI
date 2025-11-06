@@ -5,7 +5,6 @@ from .adapter import (
     OllamaOperation,
     LocalModelMetrics,
     instrument_ollama,
-    auto_instrument,
 )
 from .resource_monitor import (
     OllamaResourceMonitor,
@@ -31,6 +30,9 @@ from .validation import (
     ValidationResult,
     ValidationIssue,
     OllamaValidator,
+)
+from .registration import (
+    auto_instrument,
 )
 
 # Auto-register with instrumentation system if available
