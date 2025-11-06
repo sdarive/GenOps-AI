@@ -231,9 +231,6 @@ class MistralValidator:
             )
         else:
             self._add_passed("API key format appears correct for Mistral")
-            
-        # Mask API key in environment info (security)
-        self.result.environment_info['api_key_format'] = f"{api_key[:8]}...{api_key[-4:]}" if len(api_key) > 12 else "***"
 
     def validate_connectivity(self):
         """Test API connectivity and basic functionality."""
@@ -621,13 +618,17 @@ def print_validation_result(result: ValidationResult, detailed: bool = False):
             if detailed and issue.details:
                 print(f"     Details: {issue.details}")
     
-    # Show environment info (filter out sensitive data)
+    # Show environment info (whitelist safe keys only)
     if detailed and result.environment_info:
         print(f"\n🔧 **Environment Information:**")
-        # Filter out sensitive keys to prevent credential logging
-        sensitive_keys = {'api_key_format', 'api_key', 'password', 'token', 'secret'}
+        # Whitelist of safe keys that contain no sensitive data
+        safe_keys = {
+            'python_version', 'platform', 'validation_time', 'mistral_version',
+            'api_key_configured', 'available_models', 'connectivity_test_time',
+            'test_response_time', 'test_tokens', 'test_cost'
+        }
         for key, value in result.environment_info.items():
-            if key.lower() not in sensitive_keys and not any(sensitive in key.lower() for sensitive in sensitive_keys):
+            if key in safe_keys:
                 print(f"   • {key}: {value}")
     
     # Next steps
