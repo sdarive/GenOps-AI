@@ -66,6 +66,14 @@ def setup_auto_instrumentation():
         return False
     except Exception as e:
         print(f"❌ Auto-instrumentation setup failed: {e}")
+        print("🔧 Setup Troubleshooting:")
+        print("   • Verify OpenLLMetry installation: pip list | grep openllmetry")
+        print("   • Check GenOps installation: pip install genops[traceloop]")
+        print("   • Restart Python interpreter after installation")
+        if "import" in str(e).lower():
+            print("   💡 Import Error: Missing dependencies - run 'pip install genops[traceloop]'")
+        elif "version" in str(e).lower():
+            print("   💡 Version Conflict: Update packages - run 'pip install --upgrade genops[traceloop]'")
         return False
 
 

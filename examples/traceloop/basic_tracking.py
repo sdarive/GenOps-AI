@@ -100,6 +100,16 @@ def basic_openllmetry_with_genops():
             
     except Exception as e:
         print(f"❌ Chat completion failed: {e}")
+        print("🔧 Troubleshooting:")
+        print("   • Check API key: echo $OPENAI_API_KEY")
+        print("   • Verify network connectivity")
+        print("   • Check API rate limits and quotas")
+        if "api key" in str(e).lower():
+            print("   💡 API Key Issue: Set OPENAI_API_KEY environment variable")
+        elif "rate limit" in str(e).lower():
+            print("   💡 Rate Limit: Wait before retrying or upgrade API plan")
+        elif "network" in str(e).lower() or "connection" in str(e).lower():
+            print("   💡 Network Issue: Check internet connection and firewall settings")
         return False
     
     # Example 2: Batch operations with team attribution
@@ -143,6 +153,14 @@ def basic_openllmetry_with_genops():
             
     except Exception as e:
         print(f"❌ Batch processing failed: {e}")
+        print("🔧 Batch Processing Troubleshooting:")
+        print("   • Check if individual requests exceed rate limits")
+        print("   • Verify batch size is reasonable (<100 requests)")
+        print("   • Consider adding delays between requests")
+        if "rate limit" in str(e).lower():
+            print("   💡 Rate Limit: Implement exponential backoff or reduce batch size")
+        elif "timeout" in str(e).lower():
+            print("   💡 Timeout: Increase timeout or process in smaller batches")
         return False
     
     # Example 3: Function calling with governance

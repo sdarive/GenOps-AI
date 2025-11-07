@@ -29,22 +29,20 @@ If you're building production LLM applications, you're likely facing these chall
 
 ## 🧠 What is This Integration?
 
-### 🔍 What is OpenLLMetry?
-**OpenLLMetry is an open-source observability framework** that extends OpenTelemetry with LLM-specific instrumentation. It captures detailed traces of LLM operations and provides powerful analytics for optimization. **It's Apache 2.0 licensed and vendor-neutral.**
-
-### 🏢 What is Traceloop?
-**Traceloop is a commercial platform** built on OpenLLMetry that provides enterprise features like advanced insights, model experimentation, drift detection, and team collaboration tools. **You can use OpenLLMetry without Traceloop**, or upgrade to the commercial platform for additional capabilities.
-
-### 💡 The Perfect Combination
 **GenOps + OpenLLMetry + Traceloop** = Complete LLM observability with enterprise governance
 
-- **🔍 Enhanced Observability**: Every OpenLLMetry trace includes governance context (team, project, customer)
-- **💰 Cost Intelligence**: Precise cost tracking and attribution integrated with observability
-- **🛡️ Governance Integration**: Policy compliance and budget enforcement within observability workflows
+### 🏗️ The Stack
+- **🔍 OpenLLMetry**: Open-source LLM observability framework (Apache 2.0, vendor-neutral)
+- **🏢 Traceloop**: Commercial platform with advanced insights and team collaboration
+- **🛡️ GenOps**: Governance layer adding cost intelligence and policy enforcement
+
+### ✨ Key Benefits
+- **🔍 Enhanced Observability**: Every trace includes governance context (team, project, customer)
+- **💰 Cost Intelligence**: Precise cost tracking and attribution integrated with observability  
+- **🛡️ Policy Compliance**: Real-time governance and budget enforcement
 - **📊 Business Intelligence**: Cost optimization insights with team-based attribution
-- **🎯 Evaluation Governance**: LLM evaluation tracking with cost and compliance oversight
-- **🚀 Enterprise Readiness**: Production-grade governance for LLM observability at scale
-- **🏭 Commercial Platform**: Optional upgrade to Traceloop for advanced insights and team features
+- **🚀 Enterprise Ready**: Production-grade governance for LLM observability at scale
+- **🏭 Optional Commercial**: Upgrade to Traceloop platform for advanced features
 
 ---
 
@@ -71,183 +69,209 @@ If you're building production LLM applications, you're likely facing these chall
 
 ---
 
-## 🚀 Getting Started
+## 💰 ROI & Business Value
 
-### Phase 1: Before You Start (5 minutes)
+### Small Teams (1-5 developers)
+**Investment:** ~2 hours setup  
+**Savings:** 20-40% LLM cost reduction through optimization  
+**Value:** Clear cost visibility and basic governance
 
-**First, ensure you have the prerequisites:**
+### Growing Teams (5-20 developers)  
+**Investment:** ~1 day implementation  
+**Savings:** 30-50% cost reduction + 50% faster debugging  
+**Value:** Team attribution, budget controls, evaluation workflows
 
-1. **Python Environment**
-   ```bash
-   python3 --version  # Ensure Python 3.8+
-   ```
+### Enterprise (20+ developers)
+**Investment:** ~1 week enterprise deployment  
+**Savings:** 40-60% cost reduction + compliance automation  
+**Value:** Full governance automation, audit trails, enterprise observability
 
-2. **AI Provider Account** (choose one)
-   - [OpenAI Platform](https://platform.openai.com/api-keys) (recommended for getting started)
-   - [Anthropic Console](https://console.anthropic.com/) (alternative option)
-   - Any provider you're already using
+---
 
-3. **Optional: Traceloop Platform Account** (for commercial features)
-   - Sign up at [app.traceloop.com](https://app.traceloop.com/)
-   - Note your API key for commercial platform features
+## 🚀 Getting Started (5 Minutes Total)
 
-### Phase 2: Installation (1 minute)
+### Step 1: Install & Setup (2 minutes)
 
 ```bash
 # Install GenOps with Traceloop + OpenLLMetry integration
 pip install genops[traceloop]
 
-# This includes:
-# - OpenLLMetry (open-source framework)
-# - Traceloop SDK (commercial platform integration)
-# - GenOps governance enhancements
+# Set up your AI provider API key (choose one)
+export OPENAI_API_KEY="your-openai-api-key"             # Recommended
+export ANTHROPIC_API_KEY="your-anthropic-api-key"       # Alternative
 
-# Verify installation
-python -c "import genops, openllmetry; print('✅ Installation successful')"
-```
-
-**Quick Troubleshooting:**
-- ❌ `ModuleNotFoundError: No module named 'genops'` → Run `pip install genops[traceloop]` again
-- ❌ `ModuleNotFoundError: No module named 'openllmetry'` → Run `pip install openllmetry` directly
-
-### Phase 3: Configuration (2 minutes)
-
-Set up your environment variables:
-
-```bash
-# Required: At least one AI provider
-export OPENAI_API_KEY="your-openai-api-key"             # If using OpenAI
-export ANTHROPIC_API_KEY="your-anthropic-api-key"       # If using Anthropic
-
-# Optional: Traceloop commercial platform (enterprise features)
+# Optional: Traceloop commercial platform features
 export TRACELOOP_API_KEY="your-traceloop-api-key"       # From app.traceloop.com
-export TRACELOOP_BASE_URL="https://app.traceloop.com"   # Default (optional)
 ```
 
-**Quick Test:** Verify your setup works:
-```bash
-# Test OpenLLMetry availability
-python -c "import openllmetry; print('✅ OpenLLMetry ready')"
+**Prerequisites:**
+- **Python 3.8+** 
+- **AI Provider Account**: [OpenAI Platform](https://platform.openai.com/api-keys) or [Anthropic Console](https://console.anthropic.com/)
+- **Optional**: [Traceloop Platform Account](https://app.traceloop.com/) for commercial features
 
-# Test Traceloop SDK (optional)
-python -c "from traceloop.sdk import Traceloop; print('✅ Traceloop SDK ready')"
-```
+### Step 2: Validate Setup (30 seconds)
 
-### Phase 4: Validation (30 seconds)
-
-**🎯 Run this first** to ensure everything is configured correctly:
+**🎯 Always run this first:**
 
 ```bash
+cd examples/traceloop
 python setup_validation.py
 ```
 
 **Expected output:** ✅ **Overall Status: PASSED**
 
-**If validation fails:** Check the error messages - they include specific fixes for common issues.
+### Step 3: See Immediate Value (2.5 minutes)
+
+```bash
+# Zero-code governance integration
+python auto_instrumentation.py  # 1 line of code adds governance to ALL operations
+
+# Enhanced observability with cost attribution
+python basic_tracking.py       # See governance in your traces
+```
+
+**🎉 Success!** You now have enterprise governance for your LLM operations.
+
+---
+
+## 🆘 Quick Troubleshooting
+
+**❌ "ModuleNotFoundError: No module named 'openllmetry'"**
+```bash
+pip install openllmetry
+# Or reinstall with: pip install genops[traceloop]
+```
+
+**❌ "No LLM provider API keys found"**
+```bash
+# Verify at least one provider is configured
+echo $OPENAI_API_KEY       # Should be set if using OpenAI
+echo $ANTHROPIC_API_KEY    # Should be set if using Anthropic
+```
+
+**❌ "Governance integration issues"**
+```bash
+# Enable detailed logging for diagnosis
+export GENOPS_LOG_LEVEL=DEBUG
+python basic_tracking.py
+```
+
+**Need more help?** See the [Advanced Troubleshooting](#-advanced-troubleshooting) section below.
 
 ---
 
 ## 📚 Learning Path Guide
 
-### 🎯 Your Learning Journey
+### 🎯 Your Progressive Journey
 
-**Total Time Investment:** 4-6 hours (spread across days/weeks)  
-**Immediate Value:** Visible in first 5 minutes  
-**Production Ready:** After Level 2 completion  
+**⏱️ Time Investment:** 4-6 hours (spread across days/weeks)  
+**🚀 Immediate Value:** Visible in first 5 minutes  
+**🏭 Production Ready:** After Level 2 completion  
 
-### Level 1: Getting Started (15 minutes total)
-**Goal:** Understand the value and get immediate results  
-**When to Use:** Perfect for initial evaluation and proof-of-concept
+---
 
-**Learning Outcomes:**
-- ✅ See enhanced OpenLLMetry traces with governance attributes
-- ✅ Understand automatic cost attribution and team tracking  
-- ✅ Experience zero-code governance integration
-- ✅ Get immediate cost visibility for your LLM operations
+### 🟢 Level 1: Getting Started (15 minutes total)
+**🎯 Goal:** See immediate value and understand the integration  
+**🏷️ Best For:** Initial evaluation, proof-of-concept, team demos
 
-**Examples:**
+**🎓 What You'll Learn:**
+- How to add governance to existing OpenLLMetry applications with zero code changes
+- See cost attribution and team tracking in your observability platform  
+- Understand the relationship between OpenLLMetry, Traceloop, and GenOps
+- Experience enhanced traces with governance context
 
-**[setup_validation.py](setup_validation.py)** ⭐ *Start here* (30 seconds)
-- Comprehensive setup validation with actionable diagnostics
-- Verify API keys, connectivity, and basic functionality
-- Test governance integration and performance baseline
-- Understand open-source vs commercial platform options
+**📝 Examples to Run:**
 
-**[basic_tracking.py](basic_tracking.py)** (5 minutes)
-- Simple LLM operations with enhanced OpenLLMetry tracing
-- See governance attributes integrated with observability
-- Experience cost attribution and team tracking
-- Minimal code changes for maximum governance enhancement
+1. **[setup_validation.py](setup_validation.py)** ⭐ *Always start here* (30 seconds)
+   - Validates your complete setup with actionable diagnostics
+   - Tests connectivity, API keys, and governance integration
+   - Shows you exactly what's working and what needs attention
 
-**[auto_instrumentation.py](auto_instrumentation.py)** (5 minutes)  
-- Zero-code setup for existing OpenLLMetry applications
-- Automatic governance enhancement with no code changes
-- Perfect for teams already using OpenLLMetry instrumentation
-- Drop-in governance integration that "just works"
+2. **[auto_instrumentation.py](auto_instrumentation.py)** (5 minutes)  
+   - **Zero-code magic**: Add one line, get governance for ALL operations
+   - Perfect if you already use OpenLLMetry patterns
+   - Demonstrates compatibility with existing applications
 
-**💡 Level 1 Success Criteria:**
+3. **[basic_tracking.py](basic_tracking.py)** (5 minutes)
+   - See governance attributes integrated with OpenLLMetry traces
+   - Experience cost attribution and team tracking  
+   - Learn manual instrumentation patterns for custom use cases
+
+**✅ Level 1 Success Criteria:**
 - [ ] Validation script shows ✅ **Overall Status: PASSED**
-- [ ] You can see cost attribution in OpenTelemetry traces
-- [ ] Your existing OpenLLMetry code works with governance
-- [ ] You understand the open-source foundation and commercial options
+- [ ] You can see cost attribution in your observability dashboard
+- [ ] You understand how GenOps enhances OpenLLMetry without replacing it
+- [ ] Your existing code works unchanged with governance features added
+
+**🎯 Next Step:** Ready for advanced features? Continue to Level 2!
 
 ---
 
-### Level 2: Advanced Observability (1 hour total)
-**Goal:** Build production-ready evaluation and optimization workflows  
-**When to Use:** When you need advanced LLM evaluation and prompt optimization
+### 🟡 Level 2: Advanced Observability (1 hour total)
+**🎯 Goal:** Build production-ready workflows with commercial platform features  
+**🏷️ Best For:** Teams ready to optimize costs and implement advanced governance
 
-**Learning Outcomes:**
-- ✅ Implement governance-aware LLM evaluation workflows
-- ✅ Build cost-optimized prompt management systems
-- ✅ Create A/B testing frameworks with governance attribution
-- ✅ Establish evaluation pipelines with compliance tracking
+**🎓 What You'll Learn:**
+- How to integrate Traceloop commercial platform with governance tracking
+- Advanced multi-provider observability with unified cost intelligence
+- Cost optimization strategies based on detailed usage analytics  
+- Enterprise-grade governance patterns for compliance and audit
 
-**Examples:**
+**📝 Examples to Run:**
 
-**[traceloop_platform.py](traceloop_platform.py)** (30 minutes)
-- Commercial Traceloop platform integration with governance tracking
-- Advanced insights and analytics with cost attribution
-- Team collaboration features with budget enforcement
-- Enterprise-grade observability with governance automation
+4. **[traceloop_platform.py](traceloop_platform.py)** (30 minutes)
+   - **Commercial platform integration** with governance enhancement
+   - Advanced insights and analytics with team collaboration features
+   - Enterprise observability with automated governance policies
+   - See the value of upgrading from open-source to commercial features
 
-**[advanced_observability.py](advanced_observability.py)** (30 minutes)
-- Advanced OpenLLMetry patterns with cost optimization insights
-- Multi-provider observability with unified governance
-- Complex workflow tracing with detailed cost analysis
-- Optimization recommendations based on usage patterns
+5. **[advanced_observability.py](advanced_observability.py)** (30 minutes)
+   - **Multi-provider governance** with unified cost tracking
+   - Complex workflow tracing with detailed cost analysis and optimization
+   - Advanced patterns for A/B testing with governance attribution
+   - Cost-performance optimization recommendations
 
-**💡 Level 2 Success Criteria:**
-- [ ] You can run cost-attributed LLM evaluations
-- [ ] Your team can optimize operations based on cost/performance data
-- [ ] You have advanced observability with governance tracking
-- [ ] You understand commercial platform benefits and upgrade path
+**✅ Level 2 Success Criteria:**
+- [ ] You can track costs across multiple AI providers with unified governance
+- [ ] Your team can make optimization decisions based on cost/performance data  
+- [ ] You have advanced observability workflows with governance automation
+- [ ] You understand when to upgrade to Traceloop commercial platform
+
+**🎯 Next Step:** Ready for enterprise deployment? Continue to Level 3!
 
 ---
 
-### Level 3: Enterprise Governance (4+ hours total)
-**Goal:** Master production-grade governance for enterprise deployment  
-**When to Use:** For production systems requiring enterprise governance and compliance
+### 🔴 Level 3: Enterprise Governance (4+ hours total)
+**🎯 Goal:** Master production-grade deployment with enterprise governance  
+**🏷️ Best For:** Production systems requiring compliance, high-availability, and enterprise scale
 
-**Learning Outcomes:**
-- ✅ Deploy advanced observability with hierarchical tracing
-- ✅ Implement multi-provider governance with unified tracking
-- ✅ Build high-availability systems with governance automation
-- ✅ Create compliance monitoring and audit systems
+**🎓 What You'll Learn:**
+- Production deployment patterns with high-availability and disaster recovery
+- Enterprise compliance monitoring with automated audit trails
+- Advanced error handling and recovery strategies for production systems
+- Multi-region governance with unified observability and cost intelligence
 
-**Examples:**
+**📝 Examples to Run:**
 
-**[production_patterns.py](production_patterns.py)** (4 hours)
-- Enterprise-ready deployment patterns and high-availability
-- Governance automation with compliance monitoring
-- Production monitoring with cost intelligence and alerts
-- Disaster recovery and business continuity patterns
+6. **[production_patterns.py](production_patterns.py)** (3+ hours)
+   - **Enterprise deployment patterns** with high-availability architecture
+   - Multi-region governance with automatic failover and disaster recovery
+   - Production monitoring with cost intelligence, alerts, and compliance automation
+   - Advanced governance policies for SOC2, GDPR, and HIPAA compliance
 
-**💡 Level 3 Success Criteria:**
-- [ ] You can deploy multi-region governance systems
-- [ ] Your organization has automated compliance monitoring
-- [ ] You have production-grade cost intelligence dashboards
-- [ ] You understand enterprise governance patterns
+7. **[error_scenarios_demo.py](error_scenarios_demo.py)** (30 minutes)
+   - **Comprehensive error handling** and recovery demonstration
+   - Production-grade failure scenarios with automatic remediation
+   - Robust governance even during system failures and degraded performance
+   - Actionable diagnostics and troubleshooting for production issues
+
+**✅ Level 3 Success Criteria:**
+- [ ] You can deploy multi-region governance systems with automatic failover
+- [ ] Your organization has automated compliance monitoring and audit trails
+- [ ] You have production-grade cost intelligence dashboards and alerting
+- [ ] You understand enterprise governance patterns and can train your team
+
+**🏆 Congratulations!** You've mastered enterprise-grade LLM governance with observability!
 
 ---
 
@@ -308,26 +332,7 @@ This script includes progress tracking, error handling, and comprehensive report
 
 ---
 
-## 💰 ROI & Business Value
-
-### Small Teams (1-5 developers)
-**Investment:** ~2 hours setup  
-**Savings:** 20-40% LLM cost reduction through optimization  
-**Value:** Clear cost visibility and basic governance
-
-### Growing Teams (5-20 developers)  
-**Investment:** ~1 day implementation  
-**Savings:** 30-50% cost reduction + 50% faster debugging  
-**Value:** Team attribution, budget controls, evaluation workflows
-
-### Enterprise (20+ developers)
-**Investment:** ~1 week enterprise deployment  
-**Savings:** 40-60% cost reduction + compliance automation  
-**Value:** Full governance automation, audit trails, enterprise observability
-
----
-
-## 🔧 Quick Troubleshooting
+## 🔧 Advanced Troubleshooting
 
 ### Setup Issues
 **❌ "Command not found: python"**
