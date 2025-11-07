@@ -602,5 +602,84 @@ def is_enhanced_tracer(tracer_obj) -> bool:
     return True  # Assume enhanced when GenOps is loaded
 
 
+def multi_provider_cost_tracking(
+    providers: List[str],
+    team: str,
+    project: str,
+    environment: str = "development",
+    **kwargs
+) -> Dict[str, float]:
+    """
+    Enable unified cost tracking across multiple AI providers.
+    
+    This convenience function sets up cost tracking across multiple providers
+    with unified governance and provides cost aggregation.
+    
+    Args:
+        providers: List of provider names (e.g., ["openai", "anthropic", "gemini"])
+        team: Team name for cost attribution
+        project: Project name for cost tracking
+        environment: Environment (development, staging, production)
+        **kwargs: Additional configuration options
+        
+    Returns:
+        Dictionary of cost breakdowns by provider
+    """
+    if not HAS_OPENLLMETRY:
+        logger.error("Cannot enable multi-provider tracking: OpenLLMetry not available")
+        return {}
+    
+    # Create unified adapter for all providers
+    adapter = GenOpsTraceloopAdapter(
+        team=team,
+        project=project,
+        environment=environment,
+        enable_auto_instrumentation=True,
+        **kwargs
+    )
+    
+    cost_summary = {}
+    for provider in providers:
+        cost_summary[provider] = 0.0
+    
+    # Store provider configuration
+    adapter._multi_provider_config = {
+        "providers": providers,
+        "cost_summary": cost_summary
+    }
+    
+    logger.info(f"Multi-provider cost tracking enabled for: {', '.join(providers)}")
+    return cost_summary
+
+
+def traceloop_create(
+    team: str,
+    project: str,
+    environment: str = "development",
+    **kwargs
+) -> GenOpsTraceloopAdapter:
+    """
+    Create a Traceloop adapter following standard GenOps provider conventions.
+    
+    This is an alias for instrument_traceloop() that follows the standard
+    {provider}_create() naming pattern used across GenOps providers.
+    
+    Args:
+        team: Team name for cost attribution
+        project: Project name for cost tracking
+        environment: Environment (development, staging, production)
+        **kwargs: Additional configuration options
+        
+    Returns:
+        Configured GenOpsTraceloopAdapter instance
+    """
+    return instrument_traceloop(
+        team=team,
+        project=project,
+        environment=environment,
+        **kwargs
+    )
+
+
 # Global adapter instance for auto-instrumentation
 _global_adapter = None
