@@ -32,47 +32,12 @@ Features:
 """
 
 import logging
-
-# Import all main classes and functions
-from genops.providers.haystack_adapter import (
-    GenOpsHaystackAdapter,
-    HaystackComponentResult,
-    HaystackPipelineResult,
-    HaystackSessionContext,
-    GenOpsComponentMixin
-)
-
-from genops.providers.haystack_cost_aggregator import (
-    HaystackCostAggregator,
-    ComponentCostEntry,
-    ProviderCostSummary,
-    CostAnalysisResult,
-    CostOptimizationRecommendation,
-    ProviderType
-)
-
-from genops.providers.haystack_monitor import (
-    HaystackMonitor,
-    ComponentExecutionMetrics,
-    PipelineExecutionMetrics,
-    RAGWorkflowMetrics,
-    AgentWorkflowMetrics
-)
-
-from genops.providers.haystack_registration import (
-    auto_instrument,
-    disable_auto_instrumentation,
-    configure_auto_instrumentation,
-    is_instrumented,
-    get_instrumentation_stats,
-    get_current_adapter,
-    get_current_monitor,
-    get_cost_summary,
-    get_execution_metrics,
-    TemporaryInstrumentation
-)
+from typing import Any
 
 logger = logging.getLogger(__name__)
+
+# Lazy import registry to avoid circular dependencies
+_import_cache = {}
 
 # Check for Haystack availability
 try:
@@ -122,6 +87,8 @@ def instrument_haystack(
         pipeline = Pipeline()
         result = pipeline.run({"query": "What is RAG?"})
     """
+    # Lazy import to avoid circular dependency
+    auto_instrument = __getattr__('auto_instrument')
     return auto_instrument(
         team=team,
         project=project,
@@ -137,7 +104,7 @@ def create_rag_adapter(
     daily_budget_limit: float = 100.0,
     enable_retrieval_tracking: bool = True,
     enable_generation_tracking: bool = True
-) -> GenOpsHaystackAdapter:
+) -> 'GenOpsHaystackAdapter':
     """
     Create a GenOps adapter optimized for RAG (Retrieval-Augmented Generation) workflows.
     
@@ -169,6 +136,8 @@ def create_rag_adapter(
                 prompt=build_prompt(query, retriever_result["documents"])
             )
     """
+    # Lazy import to avoid circular dependency
+    GenOpsHaystackAdapter = __getattr__('GenOpsHaystackAdapter')
     return GenOpsHaystackAdapter(
         team=team,
         project=project,
@@ -185,7 +154,7 @@ def create_agent_adapter(
     daily_budget_limit: float = 100.0,
     enable_decision_tracking: bool = True,
     enable_tool_tracking: bool = True
-) -> GenOpsHaystackAdapter:
+) -> 'GenOpsHaystackAdapter':
     """
     Create a GenOps adapter optimized for agent workflows.
     
@@ -213,6 +182,8 @@ def create_agent_adapter(
                 with adapter.track_pipeline(f"agent-step-{step}") as context:
                     result = agent_pipeline.run(step_input)
     """
+    # Lazy import to avoid circular dependency
+    GenOpsHaystackAdapter = __getattr__('GenOpsHaystackAdapter')
     return GenOpsHaystackAdapter(
         team=team,
         project=project,
@@ -223,7 +194,7 @@ def create_agent_adapter(
     )
 
 
-def analyze_pipeline_costs(adapter: GenOpsHaystackAdapter, time_period_hours: int = 24) -> dict:
+def analyze_pipeline_costs(adapter: 'GenOpsHaystackAdapter', time_period_hours: int = 24) -> dict:
     """
     Analyze pipeline costs and provide optimization recommendations.
     
@@ -280,7 +251,7 @@ def analyze_pipeline_costs(adapter: GenOpsHaystackAdapter, time_period_hours: in
     }
 
 
-def get_rag_insights(monitor: HaystackMonitor, pipeline_id: str) -> dict:
+def get_rag_insights(monitor: 'HaystackMonitor', pipeline_id: str) -> dict:
     """
     Get specialized insights for RAG workflows.
     
@@ -315,7 +286,7 @@ def get_rag_insights(monitor: HaystackMonitor, pipeline_id: str) -> dict:
     }
 
 
-def get_agent_insights(monitor: HaystackMonitor, pipeline_id: str) -> dict:
+def get_agent_insights(monitor: 'HaystackMonitor', pipeline_id: str) -> dict:
     """
     Get specialized insights for agent workflows.
     
@@ -350,16 +321,101 @@ def get_agent_insights(monitor: HaystackMonitor, pipeline_id: str) -> dict:
     }
 
 
-# Import validation functions
-from genops.providers.haystack_validation import (
-    validate_haystack_setup,
-    print_validation_result,
-    ValidationResult,
-    ValidationIssue
-)
+# Lazy loading implementation to avoid circular imports
+def __getattr__(name: str) -> Any:
+    """Dynamically import requested attributes to avoid circular dependencies."""
+    if name in _import_cache:
+        return _import_cache[name]
+    
+    # Haystack adapter imports
+    if name in ('GenOpsHaystackAdapter', 'HaystackComponentResult', 'HaystackPipelineResult', 
+                'HaystackSessionContext', 'GenOpsComponentMixin'):
+        from genops.providers.haystack_adapter import (
+            GenOpsHaystackAdapter, HaystackComponentResult, HaystackPipelineResult,
+            HaystackSessionContext, GenOpsComponentMixin
+        )
+        _import_cache.update({
+            'GenOpsHaystackAdapter': GenOpsHaystackAdapter,
+            'HaystackComponentResult': HaystackComponentResult,
+            'HaystackPipelineResult': HaystackPipelineResult,
+            'HaystackSessionContext': HaystackSessionContext,
+            'GenOpsComponentMixin': GenOpsComponentMixin
+        })
+        return _import_cache[name]
+    
+    # Cost aggregator imports
+    elif name in ('HaystackCostAggregator', 'ComponentCostEntry', 'ProviderCostSummary', 
+                  'CostAnalysisResult', 'CostOptimizationRecommendation', 'ProviderType'):
+        from genops.providers.haystack_cost_aggregator import (
+            HaystackCostAggregator, ComponentCostEntry, ProviderCostSummary,
+            CostAnalysisResult, CostOptimizationRecommendation, ProviderType
+        )
+        _import_cache.update({
+            'HaystackCostAggregator': HaystackCostAggregator,
+            'ComponentCostEntry': ComponentCostEntry,
+            'ProviderCostSummary': ProviderCostSummary,
+            'CostAnalysisResult': CostAnalysisResult,
+            'CostOptimizationRecommendation': CostOptimizationRecommendation,
+            'ProviderType': ProviderType
+        })
+        return _import_cache[name]
+    
+    # Monitor imports
+    elif name in ('HaystackMonitor', 'ComponentExecutionMetrics', 'PipelineExecutionMetrics', 
+                  'RAGWorkflowMetrics', 'AgentWorkflowMetrics'):
+        from genops.providers.haystack_monitor import (
+            HaystackMonitor, ComponentExecutionMetrics, PipelineExecutionMetrics,
+            RAGWorkflowMetrics, AgentWorkflowMetrics
+        )
+        _import_cache.update({
+            'HaystackMonitor': HaystackMonitor,
+            'ComponentExecutionMetrics': ComponentExecutionMetrics,
+            'PipelineExecutionMetrics': PipelineExecutionMetrics,
+            'RAGWorkflowMetrics': RAGWorkflowMetrics,
+            'AgentWorkflowMetrics': AgentWorkflowMetrics
+        })
+        return _import_cache[name]
+    
+    # Registration imports
+    elif name in ('auto_instrument', 'disable_auto_instrumentation', 'configure_auto_instrumentation',
+                  'is_instrumented', 'get_instrumentation_stats', 'get_current_adapter',
+                  'get_current_monitor', 'get_cost_summary', 'get_execution_metrics', 'TemporaryInstrumentation'):
+        from genops.providers.haystack_registration import (
+            auto_instrument, disable_auto_instrumentation, configure_auto_instrumentation,
+            is_instrumented, get_instrumentation_stats, get_current_adapter,
+            get_current_monitor, get_cost_summary, get_execution_metrics, TemporaryInstrumentation
+        )
+        _import_cache.update({
+            'auto_instrument': auto_instrument,
+            'disable_auto_instrumentation': disable_auto_instrumentation,
+            'configure_auto_instrumentation': configure_auto_instrumentation,
+            'is_instrumented': is_instrumented,
+            'get_instrumentation_stats': get_instrumentation_stats,
+            'get_current_adapter': get_current_adapter,
+            'get_current_monitor': get_current_monitor,
+            'get_cost_summary': get_cost_summary,
+            'get_execution_metrics': get_execution_metrics,
+            'TemporaryInstrumentation': TemporaryInstrumentation
+        })
+        return _import_cache[name]
+    
+    # Validation imports
+    elif name in ('validate_haystack_setup', 'print_validation_result', 'ValidationResult', 'ValidationIssue'):
+        from genops.providers.haystack_validation import (
+            validate_haystack_setup, print_validation_result, ValidationResult, ValidationIssue
+        )
+        _import_cache.update({
+            'validate_haystack_setup': validate_haystack_setup,
+            'print_validation_result': print_validation_result,
+            'ValidationResult': ValidationResult,
+            'ValidationIssue': ValidationIssue
+        })
+        return _import_cache[name]
+    
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
 
 
-# Export all main classes and functions
+# Export all main classes and functions (maintains API compatibility with lazy loading)
 __all__ = [
     # Core classes
     'GenOpsHaystackAdapter',
@@ -376,6 +432,8 @@ __all__ = [
     'AgentWorkflowMetrics',
     'ComponentCostEntry',
     'CostAnalysisResult',
+    'ProviderCostSummary',
+    'CostOptimizationRecommendation',
     
     # Auto-instrumentation
     'auto_instrument',

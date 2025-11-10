@@ -247,9 +247,7 @@ def create_multi_provider_comparison_pipeline() -> Dict[str, Pipeline]:
     gpt4_pipeline.add_component("prompt_builder", PromptBuilder(
         template="Provide a detailed and accurate answer: {{question}}"
     ))
-    gpt4_pipeline.add_component("llm", OpenAI
-
-Generate(
+    gpt4_pipeline.add_component("llm", OpenAIGenerator(
         model="gpt-4",
         generation_kwargs={"max_tokens": 200, "temperature": 0.3}
     ))
