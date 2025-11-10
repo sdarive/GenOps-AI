@@ -274,7 +274,7 @@ As governance needs grow beyond what the framework can handle alone, teams typic
 - ✅ [Perplexity AI](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/perplexity) (<a href="https://www.perplexity.ai/" target="_blank">↗</a>)
 - ✅ [Together AI](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/together) (<a href="https://www.together.ai/" target="_blank">↗</a>)
 - ✅ [Fireworks AI](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/fireworks) (<a href="https://fireworks.ai/" target="_blank">↗</a>)
-- ☐ CrewAI (<a href="https://www.crewai.com/" target="_blank">↗</a>)
+- ✅ [CrewAI](https://github.com/KoshiHQ/GenOps-AI/tree/main/docs/quickstart/crewai-quickstart.md) (<a href="https://www.crewai.com/" target="_blank">↗</a>) - Multi-agent workflow governance
 - ☐ AutoGen (<a href="https://github.com/microsoft/autogen" target="_blank">↗</a>)
 - ☐ Dust (<a href="https://dust.tt/" target="_blank">↗</a>)
 - ☐ Flowise (<a href="https://flowiseai.com/" target="_blank">↗</a>)
