@@ -69,25 +69,81 @@ CostAnalysisResult = _LazyImportSentinel("CostAnalysisResult")
 ProviderCostSummary = _LazyImportSentinel("ProviderCostSummary")
 CostOptimizationRecommendation = _LazyImportSentinel("CostOptimizationRecommendation")
 
-# Auto-instrumentation
-auto_instrument = _LazyImportSentinel("auto_instrument")
-disable_auto_instrumentation = _LazyImportSentinel("disable_auto_instrumentation")
-configure_auto_instrumentation = _LazyImportSentinel("configure_auto_instrumentation")
-is_instrumented = _LazyImportSentinel("is_instrumented")
+# Callable placeholder functions that trigger lazy loading
+def auto_instrument(*args, **kwargs):
+    """Lazy-loaded auto_instrument function."""
+    real_func = __getattr__('auto_instrument')
+    globals()['auto_instrument'] = real_func  # Replace placeholder
+    return real_func(*args, **kwargs)
+
+def disable_auto_instrumentation(*args, **kwargs):
+    """Lazy-loaded disable_auto_instrumentation function."""
+    real_func = __getattr__('disable_auto_instrumentation')
+    globals()['disable_auto_instrumentation'] = real_func
+    return real_func(*args, **kwargs)
+
+def configure_auto_instrumentation(*args, **kwargs):
+    """Lazy-loaded configure_auto_instrumentation function.""" 
+    real_func = __getattr__('configure_auto_instrumentation')
+    globals()['configure_auto_instrumentation'] = real_func
+    return real_func(*args, **kwargs)
+
+def is_instrumented(*args, **kwargs):
+    """Lazy-loaded is_instrumented function."""
+    real_func = __getattr__('is_instrumented') 
+    globals()['is_instrumented'] = real_func
+    return real_func(*args, **kwargs)
+
+# Class sentinels remain as sentinels
 TemporaryInstrumentation = _LazyImportSentinel("TemporaryInstrumentation")
 
-# Validation functions
-validate_haystack_setup = _LazyImportSentinel("validate_haystack_setup")
-print_validation_result = _LazyImportSentinel("print_validation_result")
+# Validation functions (callable)
+def validate_haystack_setup(*args, **kwargs):
+    """Lazy-loaded validate_haystack_setup function."""
+    real_func = __getattr__('validate_haystack_setup')
+    globals()['validate_haystack_setup'] = real_func
+    return real_func(*args, **kwargs)
+
+def print_validation_result(*args, **kwargs):
+    """Lazy-loaded print_validation_result function."""
+    real_func = __getattr__('print_validation_result')
+    globals()['print_validation_result'] = real_func
+    return real_func(*args, **kwargs)
+
+# Class sentinels remain as sentinels
 ValidationResult = _LazyImportSentinel("ValidationResult")
 ValidationIssue = _LazyImportSentinel("ValidationIssue")
 
-# Monitoring functions
-get_current_adapter = _LazyImportSentinel("get_current_adapter")
-get_current_monitor = _LazyImportSentinel("get_current_monitor")
-get_cost_summary = _LazyImportSentinel("get_cost_summary")
-get_execution_metrics = _LazyImportSentinel("get_execution_metrics")
-get_instrumentation_stats = _LazyImportSentinel("get_instrumentation_stats")
+# Monitoring functions (callable)
+def get_current_adapter(*args, **kwargs):
+    """Lazy-loaded get_current_adapter function."""
+    real_func = __getattr__('get_current_adapter')
+    globals()['get_current_adapter'] = real_func
+    return real_func(*args, **kwargs)
+
+def get_current_monitor(*args, **kwargs):
+    """Lazy-loaded get_current_monitor function."""
+    real_func = __getattr__('get_current_monitor') 
+    globals()['get_current_monitor'] = real_func
+    return real_func(*args, **kwargs)
+
+def get_cost_summary(*args, **kwargs):
+    """Lazy-loaded get_cost_summary function."""
+    real_func = __getattr__('get_cost_summary')
+    globals()['get_cost_summary'] = real_func
+    return real_func(*args, **kwargs)
+
+def get_execution_metrics(*args, **kwargs):
+    """Lazy-loaded get_execution_metrics function."""
+    real_func = __getattr__('get_execution_metrics')
+    globals()['get_execution_metrics'] = real_func
+    return real_func(*args, **kwargs)
+
+def get_instrumentation_stats(*args, **kwargs):
+    """Lazy-loaded get_instrumentation_stats function."""
+    real_func = __getattr__('get_instrumentation_stats')
+    globals()['get_instrumentation_stats'] = real_func
+    return real_func(*args, **kwargs)
 
 # Mixins and utilities
 GenOpsComponentMixin = _LazyImportSentinel("GenOpsComponentMixin")
