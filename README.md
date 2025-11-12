@@ -252,6 +252,7 @@ As governance needs grow beyond what the framework can handle alone, teams typic
 
 ### 🧠 AI & LLM Ecosystem
 - ✅ [OpenRouter](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/openrouter) (<a href="https://openrouter.ai/" target="_blank">↗</a>)
+- ☐ [LiteLLM](https://docs.litellm.ai/) (<a href="https://docs.litellm.ai/" target="_blank">↗</a>) - Unified interface to 100+ LLM providers
 - ✅ [OpenAI](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/openai) (<a href="https://openai.com/" target="_blank">↗</a>)
 - ✅ [Anthropic](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/anthropic) (<a href="https://www.anthropic.com/" target="_blank">↗</a>)
 - ✅ [Hugging Face](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/huggingface) (<a href="https://huggingface.co/docs/inference-providers/index" target="_blank">↗</a>)
