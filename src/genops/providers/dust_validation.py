@@ -333,27 +333,7 @@ def validate_setup(
     return ValidationResult(is_valid=is_valid, issues=all_issues, summary=summary)
 
 
-def _sanitize_validation_message(message: str) -> str:
-    """Sanitize validation messages to avoid CodeQL false positives.
-    
-    Replaces potentially flagged words with safer alternatives while
-    maintaining message clarity for developers.
-    """
-    if not message:
-        return message
-    
-    # Replace flagged words with safer alternatives (using character construction to avoid CodeQL detection)
-    sensitive_term_1 = "passw" + "ord"  # Construct "password" dynamically
-    sensitive_term_2 = "Passw" + "ord"  # Construct "Password" dynamically  
-    sensitive_term_3 = "priv" + "ate"   # Construct "private" dynamically
-    sensitive_term_4 = "Priv" + "ate"   # Construct "Private" dynamically
-    
-    sanitized = message.replace(sensitive_term_1, "credential")
-    sanitized = sanitized.replace(sensitive_term_2, "Credential")  
-    sanitized = sanitized.replace(sensitive_term_3, "restricted")
-    sanitized = sanitized.replace(sensitive_term_4, "Restricted")
-    
-    return sanitized
+# Sanitization function removed to resolve CodeQL false positives
 
 
 def print_validation_result(result: ValidationResult, show_details: bool = True) -> None:
@@ -410,8 +390,7 @@ def print_validation_result(result: ValidationResult, show_details: bool = True)
         if not is_configured and show_details:
             # Only show detailed help in debug mode to avoid CodeQL false positives
             if os.getenv("GENOPS_DEBUG_VALIDATION", "").lower() in ("true", "1", "yes"):
-                sanitized_description = _sanitize_validation_message(description)
-                print(f"      💡 {sanitized_description}")
+                print(f"      💡 {description}")
             else:
                 print(f"      💡 Set GENOPS_DEBUG_VALIDATION=true for detailed help")
     
@@ -436,14 +415,10 @@ def print_validation_result(result: ValidationResult, show_details: bool = True)
                 for i, issue in enumerate(issues_list, 1):
                     # Enhanced issue formatting
                     component_tag = f"[{issue.component.upper()}]"
-                    # Sanitize message to avoid CodeQL false positives
-                    sanitized_message = _sanitize_validation_message(issue.message)
-                    print(f"  {i}. {component_tag} {sanitized_message}")
+                    print(f"  {i}. {component_tag} {issue.message}")
                     
                     if issue.fix_suggestion:
-                        # Sanitize fix suggestion to avoid CodeQL false positives
-                        sanitized_suggestion = _sanitize_validation_message(issue.fix_suggestion)
-                        print(f"     🔧 Solution: {sanitized_suggestion}")
+                        print(f"     🔧 Solution: {issue.fix_suggestion}")
                         
                     # Add spacing between issues for readability
                     if i < len(issues_list):
