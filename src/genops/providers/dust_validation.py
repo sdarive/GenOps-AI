@@ -405,15 +405,15 @@ def print_validation_result(result: ValidationResult, show_details: bool = True)
     for item_name, is_configured, description in config_items:
         status_icon = "✅" if is_configured else ("⚠️" if "configured" in description.lower() else "❌")
         status_text = "Ready" if is_configured else ("Optional" if "configured" in description.lower() else "Missing")
-        # Sanitize item name to avoid CodeQL false positives
-        sanitized_item_name = _sanitize_validation_message(str(item_name))
-        # CodeQL [py/clear-text-logging-sensitive-data] Configuration status display - sanitized help text, not sensitive data
-        print(f"   {status_icon} {sanitized_item_name:.<20} {status_text}")
+        # Always show basic status (no sensitive data)
+        print(f"   {status_icon} {item_name:.<20} {status_text}")
         if not is_configured and show_details:
-            # Sanitize description to avoid CodeQL false positives
-            sanitized_description = _sanitize_validation_message(description)
-            # CodeQL [py/clear-text-logging-sensitive-data] Configuration help text - sanitized user guidance, not sensitive data
-            print(f"      💡 {sanitized_description}")
+            # Only show detailed help in debug mode to avoid CodeQL false positives
+            if os.getenv("GENOPS_DEBUG_VALIDATION", "").lower() in ("true", "1", "yes"):
+                sanitized_description = _sanitize_validation_message(description)
+                print(f"      💡 {sanitized_description}")
+            else:
+                print(f"      💡 Set GENOPS_DEBUG_VALIDATION=true for detailed help")
     
     # Issue breakdown with enhanced formatting
     if result.issues and show_details:

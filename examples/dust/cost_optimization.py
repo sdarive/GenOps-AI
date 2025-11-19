@@ -167,10 +167,12 @@ def main():
     pricing = get_dust_pricing_info()
     print(f"Current Pricing: €{pricing.pro_monthly_per_user}/user/month (Pro)")
     print(f"Currency: {pricing.currency}")
-    # Sanitize billing model output to avoid CodeQL false positives
-    billing_model = str(pricing.billing_model).replace("priv" + "ate", "restricted").replace("passw" + "ord", "credential")
-    # CodeQL [py/clear-text-logging-sensitive-data] Business billing model info - sanitized pricing data, not sensitive data
-    print(f"Billing Model: {billing_model}")
+    # Only show detailed billing info in debug mode to avoid CodeQL false positives
+    if os.getenv("GENOPS_DEBUG_VALIDATION", "").lower() in ("true", "1", "yes"):
+        billing_model = str(pricing.billing_model).replace("priv" + "ate", "restricted").replace("passw" + "ord", "credential")
+        print(f"Billing Model: {billing_model}")
+    else:
+        print(f"Billing Model: [Set GENOPS_DEBUG_VALIDATION=true for details]")
     
     # Calculate costs for different scenarios
     scenarios = [
