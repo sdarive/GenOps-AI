@@ -288,6 +288,7 @@ As governance needs grow beyond what the framework can handle alone, teams typic
 - ✅ [AWS Bedrock](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/bedrock) (<a href="https://aws.amazon.com/bedrock/" target="_blank">↗</a>)
 - ✅ [OpenRouter](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/openrouter) (<a href="https://openrouter.ai/" target="_blank">↗</a>)
 - ✅ [LiteLLM](https://github.com/KoshiHQ/GenOps-AI/tree/main/docs/litellm-quickstart.md) (<a href="https://docs.litellm.ai/" target="_blank">↗</a>)
+- ✅ [Vercel AI SDK](https://github.com/KoshiHQ/GenOps-AI/tree/main/docs/vercel-ai-sdk-quickstart.md) (<a href="https://ai-sdk.dev/" target="_blank">↗</a>)
 - ✅ [Helicone](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/helicone) (<a href="https://helicone.ai/" target="_blank">↗</a>)
 - ✅ [LangChain](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/langchain) (<a href="https://python.langchain.com/" target="_blank">↗</a>)
 - ✅ [LlamaIndex](https://github.com/KoshiHQ/GenOps-AI/tree/main/examples/llamaindex) (<a href="https://www.llamaindex.ai/" target="_blank">↗</a>)
